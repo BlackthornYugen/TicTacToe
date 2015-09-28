@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="btnNewGame">新しいゲーム</string>
+    <string name="xLost">Xロスト</string>
+    <string name="oLost">Oロスト</string>
+    <string name="everyoneLost">ドロー！誰もが失います！</string>
+    <string name="somebodyWon">%s勝利！</string>
+</resources>

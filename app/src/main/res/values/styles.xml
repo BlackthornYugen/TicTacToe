@@ -1,0 +1,22 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="MenuButton">
+        <item name="android:gravity" >center</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:background" >#80ffffaa</item></style>
+
+    <style name="GameButton">
+        <item name="android:gravity" >center</item>
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:background" >#FFFFFF</item></style>
+
+</resources>
