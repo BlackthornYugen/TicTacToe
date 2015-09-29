@@ -6,4 +6,4 @@ Tic Tac Toe for Android
 - [Stylesheet](app/src/main/res/values/styles.xml)
 - Strings
   - [English](app/src/main/res/values/strings.xml)
-  - [Japanese](app/src/main/res/values-jp/strings.xml)
+  - [Japanese](app/src/main/res/values-ja/strings.xml)

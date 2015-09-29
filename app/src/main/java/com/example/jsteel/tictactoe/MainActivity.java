@@ -1,8 +1,10 @@
 package com.example.jsteel.tictactoe;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,8 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    final int BUTTON_COLOUR_DEFAULT = Color.WHITE;
-    final int BUTTON_COLOUR_DARK    = Color.DKGRAY;
+    final TypedValue BUTTON_COLOUR_DEFAULT = new TypedValue();
+    final TypedValue BUTTON_COLOUR_DARK = new TypedValue();
     final int MASK_ALL_BUTTONS      = 0b111111111;
     GameInstance game               = new GameInstance();
     List<Button> ticTacToeButtons;
@@ -44,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Grab colours
+        getTheme().resolveAttribute(R.attr.colorPrimary, BUTTON_COLOUR_DEFAULT, true);
+        getTheme().resolveAttribute(R.attr.colorPrimaryDark, BUTTON_COLOUR_DARK, true);
+
+        // Create game instance
         Button btnNewGame = (Button) findViewById(R.id.btnNewGame);
 
         ticTacToeButtons = Arrays.asList(
@@ -55,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 MainActivity.this.game = new GameInstance();
-                modifyButtons(MASK_ALL_BUTTONS, "", BUTTON_COLOUR_DEFAULT, true);
+                modifyButtons(MASK_ALL_BUTTONS, "", BUTTON_COLOUR_DEFAULT.data, true);
             }
         });
 
@@ -79,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void victory(String player) {
         Toast.makeText(this, String.format(getString(R.string.somebodyWon), player), Toast.LENGTH_SHORT).show();
-        modifyButtons(~game.getWinningCondition(), null, BUTTON_COLOUR_DARK, false);
+        modifyButtons(~game.getWinningCondition(), null, BUTTON_COLOUR_DARK.data, false);
     }
 
     private void draw(){

@@ -1,6 +1,4 @@
 <resources>
-
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
     </style>
@@ -12,11 +10,13 @@
         <item name="android:layout_margin">3dp</item>
         <item name="android:background" >#80ffffaa</item></style>
 
-    <style name="GameButton">
+    <style name="GameButtonBasic">
         <item name="android:gravity" >center</item>
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_height">100dp</item>
         <item name="android:layout_margin">3dp</item>
         <item name="android:background" >#FFFFFF</item></style>
+
+    <style name="GameButton" parent="GameButtonBasic">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">100dp</item></style>
 
 </resources>
