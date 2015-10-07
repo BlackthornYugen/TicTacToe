@@ -1,4 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- steel_logo.xml
+     Default logo that points to the mipmap steel_logo
+     Revision History
+     John M. Steel, 2015-09-27: Created -->
 <bitmap
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:src="@drawable/steel_logo"

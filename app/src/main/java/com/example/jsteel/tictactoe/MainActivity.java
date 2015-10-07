@@ -4,6 +4,8 @@ package com.example.jsteel.tictactoe;
  *  The main app activity
  *  Revision History
  *  John M. Steel, 2015-09-26: Created
+ *  John M. Steel, 2015-10-06: Added an ENHANCEMENT on line 41 that will allow you to share a game
+ *      that has been completed or is in progress with all your friends =)
  */
 import android.content.Intent;
 import android.os.Bundle;
