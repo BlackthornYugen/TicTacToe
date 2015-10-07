@@ -1,9 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- strings.xml
+     Default/English Strings
+     Revision History
+     John M. Steel, 2015-09-25: Created -->
 <resources>
     <string name="app_name">TicTacToe</string>
-
     <string name="btnNewGame">New Game</string>
-    <string name="xLost">X Lost</string>
-    <string name="oLost">O Lost</string>
     <string name="everyoneLost">Draw! Everyone loses!</string>
     <string name="somebodyWon">%s wins!</string>
+    <string name="aboutText">Tic Tac Toe by John Steel</string>
 </resources>

@@ -1,4 +1,16 @@
+<!-- main_menu.xml
+     Main Menu Icons
+     Revision History
+     John M. Steel, 2015-09-27: Created -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <item android:id="@+id/menu_about"
+        android:icon="@drawable/steel_logo"
+        android:title="About SteelComputers"
+        app:showAsAction="ifRoom|withText"/>
+    <item android:id="@+id/menu_share"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="Share"
+        app:showAsAction="ifRoom|withText" />
 </menu>

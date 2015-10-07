@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- zh\strings.xml
+     Chinese Strings
+     Revision History
+     John M. Steel, 2015-10-06: Created -->
+<resources>
+    <string name="btnNewGame">新游戏</string>
+    <string name="everyoneLost">抽奖！每个人都失去了！</string>
+    <string name="somebodyWon">%s的胜利！</string>
+    <string name="aboutText">井字由永钢</string>
+</resources>

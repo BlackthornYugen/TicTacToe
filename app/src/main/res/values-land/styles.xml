@@ -1,3 +1,7 @@
+<!-- land\styles.xml
+     Landscape Style Adjustments
+     Revision History
+     John M. Steel, 2015-09-30: Created -->
 <resources>
     <style name="GameButton" parent="GameButtonBasic">
         <item name="android:layout_width">80dp</item>

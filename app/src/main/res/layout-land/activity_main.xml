@@ -1,3 +1,7 @@
+<!-- land\activity_main.xml
+     Landscape Layout
+     Revision History
+     John M. Steel, 2015-09-27: Created -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -16,7 +20,7 @@
         <LinearLayout
             android:id="@+id/layoutGameButtons"
             android:layout_width="0dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:layout_height="fill_parent"
             android:gravity="center"
             android:orientation="vertical">
@@ -39,19 +43,27 @@
                 <Button android:id="@+id/btn8" style="@style/GameButton" />
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:layout_height="fill_parent"
-            android:gravity="center"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/btnNewGame"
-                style="@style/MenuButton"
-                android:layout_width="match_parent"
-                android:text="@string/btnNewGame"/>
-        </LinearLayout>
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:src="@drawable/steel_logo"
+                />
+            <LinearLayout
+                android:layout_alignParentBottom="true"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/btnNewGame"
+                    style="@style/MenuButton"
+                    android:text="@string/btnNewGame"/>
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

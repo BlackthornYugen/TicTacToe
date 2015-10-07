@@ -1,3 +1,7 @@
+<!-- styles.xml
+     Default Styles
+     Revision History
+     John M. Steel, 2015-09-27: Created -->
 <resources>
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
@@ -7,13 +11,12 @@
         <item name="android:gravity" >center</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">3dp</item>
-        <item name="android:background" >#80ffffaa</item></style>
+        <item name="android:layout_margin">3dp</item></style>
 
     <style name="GameButtonBasic">
         <item name="android:gravity" >center</item>
-        <item name="android:layout_margin">3dp</item>
-        <item name="android:background" >#FFFFFF</item></style>
+        <item name="android:textSize" >30dp</item>
+        <item name="android:layout_margin">3dp</item></style>
 
     <style name="GameButton" parent="GameButtonBasic">
         <item name="android:layout_width">100dp</item>

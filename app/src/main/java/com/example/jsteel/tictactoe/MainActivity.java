@@ -1,127 +1,173 @@
 package com.example.jsteel.tictactoe;
-
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
+/**
+ *  MainActivity.java
+ *  The main app activity
+ *  Revision History
+ *  John M. Steel, 2015-09-26: Created
+ */
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.TypedValue;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    final TypedValue BUTTON_COLOUR_DEFAULT = new TypedValue();
-    final TypedValue BUTTON_COLOUR_DARK = new TypedValue();
     final int MASK_ALL_BUTTONS      = 0b111111111;
     GameInstance game               = new GameInstance();
     List<Button> ticTacToeButtons;
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_about:
+                Toast.makeText(MainActivity.this, R.string.aboutText, Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.menu_share:
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, game.toString());
+                startActivity(Intent.createChooser(intent, "Share via"));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("game", game);
+        try {
+            outState.putSerializable("game", game);
+        } catch (Exception ex) {
+            String message = String.format("Failed to save game state:\n%s", ex.getMessage());
+            Log.e("exception", message, ex);
+            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        game = (GameInstance) savedInstanceState.get("game");
-        modifyButtons(game.getO(), "O", null, false); // Remember Os
-        modifyButtons(game.getX(), "X", null, false); // Remember Xs
-        int win = game.getWinningCondition();
-        if (win > 0) {
-            victory(game.getTurn() % 2 == 0 ? "O" : "X");
-        } else if (game.getTurn() >= game.MAP_SIZE) {
-            draw();
+        try {
+            game = (GameInstance) savedInstanceState.get("game");
+            modifyButtons(game.getO(), "O", null, false); // Remember Os
+            modifyButtons(game.getX(), "X", null, false); // Remember Xs
+            int win = game.getWinningCondition();
+            if (win > 0) {
+                victory(game.getTurn() % 2 == 0 ? "O" : "X");
+            } else if (game.getTurn() >= game.MAP_SIZE) {
+                draw();
+            }
+        } catch (Exception ex) {
+            String message = String.format("Failed to restore game state:\n%s", ex.getMessage());
+            Log.e("exception", message, ex);
+            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        try {
+            setContentView(R.layout.activity_main);
 
-        // Grab colours
-        getTheme().resolveAttribute(R.attr.colorPrimary, BUTTON_COLOUR_DEFAULT, true);
-        getTheme().resolveAttribute(R.attr.colorPrimaryDark, BUTTON_COLOUR_DARK, true);
+            // Create game instance
+            Button btnNewGame = (Button) findViewById(R.id.btnNewGame);
 
-        // Create game instance
-        Button btnNewGame = (Button) findViewById(R.id.btnNewGame);
+            ticTacToeButtons = Arrays.asList(
+                    (Button) findViewById(R.id.btn0), (Button) findViewById(R.id.btn1), (Button) findViewById(R.id.btn2),
+                    (Button) findViewById(R.id.btn3), (Button) findViewById(R.id.btn4), (Button) findViewById(R.id.btn5),
+                    (Button) findViewById(R.id.btn6), (Button) findViewById(R.id.btn7), (Button) findViewById(R.id.btn8)
+            );
 
-        ticTacToeButtons = Arrays.asList(
-                (Button) findViewById(R.id.btn0), (Button) findViewById(R.id.btn1), (Button) findViewById(R.id.btn2),
-                (Button) findViewById(R.id.btn3), (Button) findViewById(R.id.btn4), (Button) findViewById(R.id.btn5),
-                (Button) findViewById(R.id.btn6), (Button) findViewById(R.id.btn7), (Button) findViewById(R.id.btn8)
-        );
-
-        btnNewGame.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                MainActivity.this.game = new GameInstance();
-                modifyButtons(MASK_ALL_BUTTONS, "", BUTTON_COLOUR_DEFAULT.data, true);
-            }
-        });
-
-        for (final Button button : ticTacToeButtons) {
-            button.setOnClickListener(new View.OnClickListener() {
+            btnNewGame.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Button clickedButton = (Button) v;
-                    clickedButton.setClickable(false);
-                    String activePlayer = MainActivity.this.game.getTurn() % 2 == 0 ? "X" : "O";
-                    clickedButton.setText(activePlayer);
-                    boolean victory = MainActivity.this.game.processTurn(ticTacToeButtons.indexOf(v));
-                    if (victory) {
-                        victory(activePlayer);
-                    } else if (game.getTurn() >= game.MAP_SIZE) {
-                        draw();
-                    }
+                    MainActivity.this.game = new GameInstance();
+                    modifyButtons(MASK_ALL_BUTTONS, "", true, true);
                 }
             });
+        } catch (Exception ex) {
+            String message = String.format("Failed to create Main Activity:\n%s", ex.getMessage());
+            Log.e("exception", message, ex);
+            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            for (final Button button : ticTacToeButtons) {
+                button.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        try {
+                            Button clickedButton = (Button) v;
+                            clickedButton.setClickable(false);
+                            String activePlayer = MainActivity.this.game.getTurn() % 2 == 0 ? "X" : "O";
+                            clickedButton.setText(activePlayer);
+                            boolean victory = MainActivity.this.game.processTurn(ticTacToeButtons.indexOf(v));
+                            if (victory) {
+                                victory(activePlayer);
+                            } else if (game.getTurn() >= game.MAP_SIZE) {
+                                draw();
+                            }
+                        } catch (Exception ex) {
+                            String message = String.format("Failed to perform move:\n%s", ex.getMessage());
+                            Log.e("exception", message, ex);
+                            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        } catch (Exception ex) {
+            String message = String.format("Failed to set click listener:\n%s", ex.getMessage());
+            Log.e("exception", message, ex);
+            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void victory(String player) {
         Toast.makeText(this, String.format(getString(R.string.somebodyWon), player), Toast.LENGTH_SHORT).show();
-        modifyButtons(~game.getWinningCondition(), null, BUTTON_COLOUR_DARK.data, false);
+        modifyButtons(~game.getWinningCondition(), null, false, false);
     }
 
     private void draw(){
         Toast.makeText(this, R.string.everyoneLost, Toast.LENGTH_SHORT).show();
-        modifyButtons(game.getO(), getString(R.string.oLost), Color.GREEN, false);
-        modifyButtons(game.getX(), getString(R.string.xLost), Color.RED, false);
+        modifyButtons(MASK_ALL_BUTTONS, null, false, false);
     }
 
     /**
      * Modify the properties of buttons matching a mask
      * @param mask      The buttons to apply modifications to (7 == top 3 buttons 0b000000111
      * @param text      If specified, this will replace the text of matched buttons
-     * @param colour    If specified, this will replace the colour of matched buttons
+     * @param enabled   If specified, this will set the enabled state of matched buttons
      * @param clickable If specified, this will set the clickable state of matched buttons
      */
-    private void modifyButtons(int mask, String text, Integer colour, Boolean clickable){
-        for (int i = 0; i < ticTacToeButtons.size(); i++) {
-            if (checkFlag(i, mask)) {
-                Button btn = ticTacToeButtons.get(i);
-                if(clickable != null) btn.setClickable(clickable);
-                if(colour != null)    btn.setBackgroundColor(colour);
-                if(text != null)      btn.setText(text);
+    private void modifyButtons(int mask, String text, Boolean enabled, Boolean clickable){
+        try {
+            for (int i = 0; i < ticTacToeButtons.size(); i++) {
+                if (GameInstance.checkFlag(i, mask)) {
+                    Button btn = ticTacToeButtons.get(i);
+                    if(clickable != null) btn.setClickable(clickable);
+                    if(enabled != null)   btn.setEnabled(enabled);
+                    if(text != null)      btn.setText(text);
+                }
             }
+        } catch (Exception ex) {
+            String message = String.format("Failed to modify buttons:\n%s", ex.getMessage());
+            Log.e("exception", message, ex);
+            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
         }
-    }
-
-    /**
-     * Convert i to a power of 2 and check it against a flag
-     * @param i The int to be convereted to a flag (0 == 1, 1 == 1, 2 == 4...)
-     * @param mask Check if flag is contained in this mask
-     * @return returns true if flag matches mask
-     */
-    private boolean checkFlag(int i, int mask) {
-        i = (int) Math.pow(2, i);
-        return (mask & i) > 0;
     }
 }
